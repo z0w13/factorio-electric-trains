@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 29. 06. 2020
+  Features:
+    - 0.18 release.
+  Balancing:
+    - Upgraded capacity of locomotives and batteries.
+    - Increased charging rate of train stops and battery charging stations.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 08. 08. 2018
+  Features:
+    - German translation added, courtesy of animewolf0258.
+  Balancing:
+    - Increased the stack size of discharged battery packs.
+    - Doubled the charge rate of electric train stops and battery charging stations.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 15. 03. 2018
+  Bugfixes:
+    - Electric train stops will now give back an electric train stop item when mined.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 06. 03. 2018
+  Features:
+  Balancing:
+    - Reduced the drain on battery charging stations.
+  Bugfixes:
+    - Re-enabled some code I forgot to in the control script, the EEIs associated with electric train stops will now be deleted properly upon deconstruction of the train stop.
+
