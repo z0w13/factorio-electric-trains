@@ -21,7 +21,6 @@ data:extend(
     place_result = "electric-train-stop",
     stack_size = 10
   },
-  
   {
     type = "item",
     name = "battery-charging-station",
@@ -82,3 +81,18 @@ data:extend(
     stack_size = 10
   }
 })
+
+if data.raw["train-stop"]["logistic-train-stop"] ~= nil then
+  data:extend({
+    {
+      type = "item",
+      name = "electric-logistic-train-stop",
+      icon = "__ElectricTrains__/graphics/icons/train-stop.png",
+      icon_size = 64, icon_mipmaps = 4,
+      subgroup = "transport",
+      order = "a[train-system]-c[logistic-train-stop]-a",
+      place_result = "electric-logistic-train-stop",
+      stack_size = 10
+    }
+  })
+end

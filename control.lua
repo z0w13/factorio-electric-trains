@@ -74,8 +74,12 @@ script.on_load(function()
   end
 end)
 
+function is_electric_strain_stop(entity)
+    return entity.name == "electric-train-stop" or entity.name == "electric-logistic-train-stop"
+end
+
 function entity_built(event)
-  if event.created_entity.name == "electric-train-stop" then
+  if is_electric_strain_stop(event.created_entity) then
     local position = event.created_entity.position
     local force = event.created_entity.force
     local surface = event.created_entity.surface.index
@@ -92,7 +96,7 @@ script.on_event(defines.events.on_built_entity, entity_built)
 script.on_event(defines.events.on_robot_built_entity, entity_built)
 
 function entity_removed(event)
-  if event.entity.name == "electric-train-stop" then
+  if is_electric_strain_stop(event.entity)  then
     global.stations[event.entity.unit_number][2].destroy()
     global.stations[event.entity.unit_number] = nil
     
@@ -109,7 +113,7 @@ script.on_event(defines.events.on_robot_mined_entity, entity_removed)
 script.on_event(defines.events.on_entity_died, entity_removed)
 
 function train_changed_state(event)
-  if event.train.state == waitStation and event.train.station.name == "electric-train-stop" then
+  if event.train.state == waitStation and is_electric_strain_stop(event.train.station)  then
     local locomotives = find_electric_locomotives(event.train)
     
     if #locomotives ~= nil then

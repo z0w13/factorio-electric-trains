@@ -17,6 +17,10 @@ data:extend(
       },
       {
         type = "unlock-recipe",
+        recipe = "electric-logistic-train-stop"
+      },
+      {
+        type = "unlock-recipe",
         recipe = "battery-charging-station"
       },
       {

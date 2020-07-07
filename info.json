@@ -4,7 +4,7 @@
   "title": "Electric Trains",
   "author": "Degraine",
   "homepage": "",
-  "dependencies": ["base >= 0.18.0"],
+  "dependencies": [ "base >= 0.18.0", "? LogisticTrainNetwork" ],
   "description": "Adds electric trains.",
   "factorio_version": "0.18"
 }

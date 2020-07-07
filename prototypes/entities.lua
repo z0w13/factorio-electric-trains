@@ -24,11 +24,6 @@ locomotive.stop_trigger =
   }
 }
 
-local electricTrainStop = util.table.deepcopy(data.raw["train-stop"]["train-stop"])
-electricTrainStop.name = "electric-train-stop"
-electricTrainStop.color = {r = 0, g = 0.33, b = 0.92, a = 0.5}
-electricTrainStop.minable.result = "electric-train-stop"
-
 local batteryChargingStation = util.table.deepcopy(data.raw["accumulator"]["accumulator"])
 batteryChargingStation.type = "assembling-machine"
 batteryChargingStation.name = "battery-charging-station"
@@ -51,38 +46,56 @@ batteryChargingStation.energy_source = {
   usage_priority = "secondary-input",
   drain = "3kW"
 }
+batteryChargingStation.next_upgrade = nil
 batteryChargingStation.energy_usage = "10MW"
 batteryChargingStation.fixed_recipe = "battery-pack-recharge"
 batteryChargingStation.show_recipe_icon = false
 
-data:extend(
-{
-  locomotive,
-  electricTrainStop,
-  
+function setup_electric_stop(entity)
+  data:extend(
   {
-    type = "electric-energy-interface",
-    name = "charging-station",
-    icons = {
-      {icon = "__ElectricTrains__/graphics/icons/train-stop.png"},
-      {icon = "__ElectricTrains__/graphics/icons/lightning-bolt.png", icon_size = 32, scale = 0.5, shift = {-12, 12}}
-    },
-    icon_size = 64, icon_mipmaps = 4,
-    flags = {"placeable-neutral", "player-creation", "not-blueprintable"},
-    corpse = "small-remnants",
-    -- selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
-    energy_source =
+    locomotive,
+    entity,
+    
     {
-      type = "electric",
-      buffer_capacity = "25MJ",
-      usage_priority = "primary-input",
-      input_flow_limit = "25MW",
-      output_flow_limit = "0kW",
-      drain = "500W"
+      type = "electric-energy-interface",
+      name = "charging-station",
+      icons = {
+        {icon = "__ElectricTrains__/graphics/icons/train-stop.png"},
+        {icon = "__ElectricTrains__/graphics/icons/lightning-bolt.png", icon_size = 32, scale = 0.5, shift = {-12, 12}}
+      },
+      icon_size = 64, icon_mipmaps = 4,
+      flags = {"placeable-neutral", "player-creation", "not-blueprintable"},
+      corpse = "small-remnants",
+      -- selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
+      energy_source =
+      {
+        type = "electric",
+        buffer_capacity = "25MJ",
+        usage_priority = "primary-input",
+        input_flow_limit = "25MW",
+        output_flow_limit = "0kW",
+        drain = "500W"
+      },
+      charge_cooldown = 45,
+      discharge_cooldown = 30,
     },
-    charge_cooldown = 45,
-    discharge_cooldown = 30,
-  },
-  
-  batteryChargingStation
-})
+    
+    batteryChargingStation
+  })
+end
+
+
+local electricTrainStop = util.table.deepcopy(data.raw["train-stop"]["train-stop"])
+electricTrainStop.name = "electric-train-stop"
+electricTrainStop.color = {r = 0, g = 0.33, b = 0.92, a = 0.5}
+electricTrainStop.minable.result = "electric-train-stop"
+setup_electric_stop(electricTrainStop)
+
+if data.raw["train-stop"]["logistic-train-stop"] ~= nil then
+  local electricLogisticTrainStop = util.table.deepcopy(data.raw["train-stop"]["logistic-train-stop"])
+  electricLogisticTrainStop.name = "electric-logistic-train-stop"
+  electricLogisticTrainStop.color = {r = 0, g = 0.33, b = 0.92, a = 0.5}
+  electricLogisticTrainStop.minable.result = "electric-logistic-train-stop"
+  setup_electric_stop(electricLogisticTrainStop)
+end
